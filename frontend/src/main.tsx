@@ -1,18 +1,17 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import App from './App.tsx'
-import './index.css'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { TodoList } from './pages/todoList.tsx';
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import App from "./App.tsx";
+import "./index.css";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { TodoListPage } from "./pages/TodoListPage.tsx";
 
 const routes = createBrowserRouter([
-  {path: '/', element: <App />},
-  {path: '/todo-list/:id', element: <TodoList />},
-])
+  { path: "/", element: <App /> },
+  { path: "/todo-list/:id", element: <TodoListPage /> },
+]);
 
-
-createRoot(document.getElementById('root')!).render(
+createRoot(document.getElementById("root")!).render(
   <StrictMode>
-     <RouterProvider router={routes} />
+    <RouterProvider router={routes} />
   </StrictMode>,
-)
+);

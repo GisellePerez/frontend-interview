@@ -1,14 +1,12 @@
-
-import './App.css'
+import "./App.css";
+import { Container } from "./components/container/container";
 
 function App() {
-  
-
   return (
-    <div className='m-auto w-full'>  
-     app
-    </div>
-  )
+    <Container>
+      <div>app</div>
+    </Container>
+  );
 }
 
-export default App
+export default App;
