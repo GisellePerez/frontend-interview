@@ -14,3 +14,4 @@ export interface TodoListData {
 }
 
 export type CreateTodoData = Pick<TodoData, "name">;
+export type CreateTodoListData = Pick<TodoListData, "name">;
