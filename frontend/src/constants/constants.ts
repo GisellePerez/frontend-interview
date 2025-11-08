@@ -9,3 +9,5 @@ export const URLS = {
   HOME: "/",
   TODO_LIST: "todo-list",
 };
+
+export const TRASH_ZONE_ID = "trash";
