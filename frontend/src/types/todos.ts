@@ -14,4 +14,14 @@ export interface TodoListData {
 }
 
 export type CreateTodoData = Pick<TodoData, "name">;
+
 export type CreateTodoListData = Pick<TodoListData, "name">;
+
+export type TodoAction = {
+  id: string;
+  type: "add" | "update" | "delete";
+  itemId: number;
+  itemName: string;
+  payload?: Partial<TodoData>;
+  timestamp: number;
+};

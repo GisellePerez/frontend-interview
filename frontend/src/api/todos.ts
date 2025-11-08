@@ -8,32 +8,29 @@ import {
 
 const { TODO_LISTS, TODO_ITEMS } = API_URL_SEGMENTS;
 
+/**
+ * Todo Lists
+ */
 export const fetchAllTodoLists = async (): Promise<TodoListData[]> => {
   const response = await fetch(`${API_BASE_URL}/${TODO_LISTS}`);
   return response.json();
 };
 
-export const deleteTodoListById = async (
-  todoListId: number,
-): Promise<TodoListData[]> => {
-  await fetch(`${API_BASE_URL}/todo-lists/${todoListId}`, {
+export const deleteTodoListById = async (todoListId: number): Promise<void> => {
+  await fetch(`${API_BASE_URL}/${TODO_LISTS}/${todoListId}`, {
     method: "DELETE",
   });
-  return fetchAllTodoLists();
 };
 
 export const createTodoList = async (
   payload: CreateTodoData,
-): Promise<TodoListData[]> => {
-  await fetch(`${API_BASE_URL}/${TODO_LISTS}`, {
+): Promise<TodoListData> => {
+  const response = await fetch(`${API_BASE_URL}/${TODO_LISTS}`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ ...payload }),
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
   });
-
-  return fetchAllTodoLists();
+  return response.json();
 };
 
 export const fetchTodoListById = async (
@@ -43,6 +40,9 @@ export const fetchTodoListById = async (
   return response.json();
 };
 
+/**
+ * Todo Items
+ */
 export const addTodoItem = async (
   todoListId: number,
   payload: string,

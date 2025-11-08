@@ -1,25 +1,16 @@
-import { useEffect, useState } from "react";
-import {
-  createTodoList,
-  deleteTodoListById,
-  fetchAllTodoLists,
-} from "../../api/todos";
 import { Container } from "../container/container";
-import { CreateTodoListData, TodoListData } from "../../types/todos";
+import { CreateTodoListData } from "../../types/todos";
 import { TodoListButton } from "../todo-list-button/todo-list-button";
 import { AddForm } from "../add-todo-form/add-todo-form";
+import { useTodoLists } from "../../hooks/useTodoLists";
 
 export const TodoLists: React.FC = () => {
-  const [todoLists, setTodoLists] = useState<TodoListData[]>([]);
+  const { todoLists, isLoading, isError, addTodoList, deleteTodoList } =
+    useTodoLists();
 
-  const deleteTodoList = async (id: TodoListData["id"]) => {
-    const updatedLists = await deleteTodoListById(id);
-    setTodoLists(updatedLists);
-  };
+  if (isLoading) return <p>Loading...</p>;
 
-  useEffect(() => {
-    fetchAllTodoLists().then((data) => setTodoLists(data));
-  }, []);
+  if (isError) return <p>Error loading lists.</p>;
 
   if (!todoLists?.length) {
     return <div>No lists to display</div>;
@@ -33,16 +24,16 @@ export const TodoLists: React.FC = () => {
         placeholder='New list name'
         buttonText='Add'
         nameField='name'
-        onSubmit={async (data) => {
-          const newLists = await createTodoList(data);
-          setTodoLists(newLists);
-        }}
+        onSubmit={(data) => addTodoList.mutate({ name: data.name })}
       />
 
       <ul className='my-5 min-w-[500px]'>
         {(todoLists || []).map((list) => (
           <li key={list.id}>
-            <TodoListButton {...list} deleteTodoList={deleteTodoList} />
+            <TodoListButton
+              {...list}
+              deleteTodoList={() => deleteTodoList.mutate(list.id)}
+            />
           </li>
         ))}
       </ul>

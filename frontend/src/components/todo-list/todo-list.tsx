@@ -1,124 +1,34 @@
-import React, { useEffect, useState } from "react";
-import {
-  CreateTodoData,
-  TodoData,
-  TodoListData,
-  UpdateTodoData,
-} from "../../types/todos";
+import React from "react";
+import { CreateTodoData } from "../../types/todos";
 import { Link, useParams } from "react-router-dom";
-import {
-  addTodoItem,
-  deleteTodoItem,
-  fetchTodoListById,
-  toggleTodoItemDone,
-} from "../../api/todos";
 import { TodoItem } from "../todo-item/todo-item";
 import { AddForm } from "../add-todo-form/add-todo-form";
-import {
-  DndContext,
-  DragEndEvent,
-  DragStartEvent,
-  DragOverlay,
-} from "@dnd-kit/core";
-import { SortableContext, arrayMove } from "@dnd-kit/sortable";
-
+import { DndContext, DragOverlay } from "@dnd-kit/core";
+import { SortableContext } from "@dnd-kit/sortable";
 import { TrashZone } from "../trash-zone/trash-zone";
-import { TRASH_ZONE_ID } from "../../constants/constants";
+
+import { useLogic } from "./hooks/useLogic";
 
 const TodoList: React.FC = () => {
   const params = useParams();
   const listIdParam = Number(params.id);
 
-  const [todoListData, setTodoListData] = useState<TodoListData>();
+  const {
+    todoListData,
+    isLoading,
+    isError,
+    activeItem,
+    actionHistory,
+    handleDragStart,
+    handleDragEnd,
+    handleAddTodo,
+    handleDeleteTodo,
+    handleUpdateTodo,
+  } = useLogic(listIdParam);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_activId, setActiveId] = useState<number | null>(null);
-  const [activeItem, setActiveItem] = useState<TodoData | null>(null);
+  if (isLoading) return <p>Loading...</p>;
 
-  const handleDragStart = (event: DragStartEvent) => {
-    const { active } = event;
-    const dragged = todoListData?.todoItems.find(
-      (item) => item.id === Number(active.id),
-    );
-    if (dragged) setActiveItem(dragged);
-  };
-
-  const handleDragEnd = (event: DragEndEvent) => {
-    const { active, over } = event;
-    setActiveItem(null); // reset after drop
-    if (!over || !todoListData) return;
-
-    if (over.id === TRASH_ZONE_ID) {
-      const itemId = Number(active.id);
-      if (!isNaN(itemId)) handleDeleteItem(itemId);
-      return;
-    }
-
-    if (active.id !== over.id) {
-      const oldIndex = todoListData.todoItems.findIndex(
-        (i) => i.id === Number(active.id),
-      );
-      const newIndex = todoListData.todoItems.findIndex(
-        (i) => i.id === Number(over.id),
-      );
-      const newOrder = arrayMove(todoListData.todoItems, oldIndex, newIndex);
-      setTodoListData({ ...todoListData, todoItems: newOrder });
-    }
-  };
-
-  const handleAddNewTodo = async (data: CreateTodoData) => {
-    const addedItem = await addTodoItem(listIdParam, data.name);
-    setTodoListData((prev) =>
-      prev ? { ...prev, todoItems: [...prev.todoItems, addedItem] } : prev,
-    );
-  };
-
-  const handleDeleteItem = async (todoItemId: number) => {
-    // Optimistically remove item from UI right away
-    setTodoListData((prev) =>
-      prev
-        ? {
-            ...prev,
-            todoItems: prev.todoItems.filter((item) => item.id !== todoItemId),
-          }
-        : prev,
-    );
-
-    try {
-      await deleteTodoItem(listIdParam, todoItemId);
-    } catch (error) {
-      console.error("Failed to delete item:", error);
-
-      // If deletion fails, re-fetch or restore item
-      fetchTodoListById(listIdParam).then(setTodoListData);
-    }
-  };
-
-  const handleUpdateItem = async (
-    todoItemId: number,
-    updatedItem: UpdateTodoData,
-  ) => {
-    await toggleTodoItemDone(listIdParam, todoItemId, updatedItem).then(
-      (newItem) => {
-        if (todoListData) {
-          setTodoListData({
-            ...todoListData,
-            todoItems: (todoListData?.todoItems || []).map((item) =>
-              item.id === todoItemId ? newItem : item,
-            ),
-          });
-        }
-      },
-    );
-  };
-
-  useEffect(() => {
-    fetchTodoListById(listIdParam).then((data) => {
-      setTodoListData(data);
-    });
-  }, [listIdParam]);
-
-  if (!todoListData) return <div>No data available</div>;
+  if (isError || !todoListData) return <p>Error loading todo list</p>;
 
   return (
     <div className='flex flex-col items-center justify-center gap-5 m-auto w-[90%] max-w-[790px]'>
@@ -136,16 +46,21 @@ const TodoList: React.FC = () => {
         </div>
 
         <div className='py-8 px-9'>
-          <AddForm<CreateTodoData>
-            onSubmit={handleAddNewTodo}
-            nameField='name'
-          />
+          <AddForm<CreateTodoData> onSubmit={handleAddTodo} nameField='name' />
 
           {todoListData?.todoItems?.length ? (
             <div className='relative mb-5'>
               <DndContext
                 onDragStart={handleDragStart}
-                onDragEnd={handleDragEnd}
+                onDragEnd={(event) =>
+                  handleDragEnd(event, (id) => {
+                    const item = (todoListData?.todoItems || []).find(
+                      (t) => t.id === id,
+                    );
+                    if (!item) return;
+                    handleDeleteTodo(item);
+                  })
+                }
               >
                 <SortableContext items={todoListData.todoItems}>
                   <ul className='mt-5 space-y-2'>
@@ -153,8 +68,8 @@ const TodoList: React.FC = () => {
                       <TodoItem
                         key={item.id}
                         {...item}
-                        deleteItem={handleDeleteItem}
-                        updateItem={handleUpdateItem}
+                        deleteItem={() => handleDeleteTodo(item)}
+                        updateItem={() => handleUpdateTodo(item)}
                       />
                     ))}
                   </ul>
@@ -176,6 +91,22 @@ const TodoList: React.FC = () => {
               <p>No tasks have been entered yet</p>
             </div>
           )}
+        </div>
+
+        <hr />
+
+        <div className='action-history'>
+          <h2>Action History</h2>
+          <ul>
+            {actionHistory.map((action) => (
+              <li key={action.id}>
+                {new Date(action.timestamp).toLocaleTimeString()}:
+                {action.type === "add" && `Added "${action.itemName}"`}
+                {action.type === "update" && `Updated "${action.itemName}"`}
+                {action.type === "delete" && `Deleted "${action.itemName}"`}
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </div>
