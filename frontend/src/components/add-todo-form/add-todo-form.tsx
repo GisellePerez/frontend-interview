@@ -3,7 +3,7 @@ import { MdAddCircle } from "react-icons/md";
 
 export interface AddFormProps<T extends FieldValues> {
   onSubmit: SubmitHandler<T>;
-  nameField?: keyof T; // optional, in case field key changes
+  nameField?: keyof T;
   placeholder?: string;
   buttonText?: string;
 }
@@ -17,7 +17,7 @@ export const AddForm = <T extends FieldValues>({
     register,
     handleSubmit,
     reset,
-    formState: { isSubmitting },
+    formState: { isSubmitting, errors },
   } = useForm<T>();
 
   const handleFormSubmit: SubmitHandler<T> = async (data) => {
@@ -25,23 +25,61 @@ export const AddForm = <T extends FieldValues>({
     reset();
   };
 
+  const fieldName = nameField as Path<T>;
+
+  const hasError = !!errors[fieldName];
+
   return (
     <form
       onSubmit={handleSubmit(handleFormSubmit)}
       className='w-full mb-2 md:mb-3'
+      noValidate
     >
-      <div className='flex justify-between rounded-full border-2 border-black'>
+      <div
+        className={`flex justify-between rounded-full border-2 ${
+          hasError ? "border-red-500" : "border-black"
+        }`}
+      >
         <input
-          className='w-full px-4 py-2 mr-4 my-0.5 ml-0.5 rounded-full'
+          className={`w-full px-4 py-2 mr-4 my-0.5 ml-0.5 rounded-full outline-none focus:ring-2 ${
+            hasError ? "focus:ring-red-400" : "focus:ring-black"
+          }`}
           type='text'
           placeholder={placeholder}
-          {...register(nameField as Path<T>, { required: true })}
+          aria-invalid={hasError ? "true" : "false"}
+          aria-describedby={hasError ? `${String(nameField)}-error` : undefined}
+          {...register(fieldName, {
+            required: "This field is required.",
+            minLength: {
+              value: 2,
+              message: "Must be at least 2 characters.",
+            },
+          })}
         />
 
-        <button type='submit' disabled={isSubmitting} className=' rounded-full'>
-          <MdAddCircle className='text-5xl' />
+        <button
+          type='submit'
+          disabled={isSubmitting}
+          className={`rounded-full transition-transform duration-150 hover:scale-105 active:scale-95 ${
+            isSubmitting ? "opacity-50 cursor-not-allowed" : ""
+          }`}
+        >
+          <MdAddCircle
+            className={`text-5xl ${
+              hasError ? "text-red-500" : "text-black"
+            } transition-colors`}
+          />
         </button>
       </div>
+
+      {hasError && (
+        <p
+          id={`${String(nameField)}-error`}
+          className='text-red-500 text-sm mt-1 ml-3'
+        >
+          {(errors[fieldName]?.message as string) ?? "This field is required."}
+        </p>
+      )}
     </form>
   );
 };
