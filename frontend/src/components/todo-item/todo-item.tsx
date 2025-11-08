@@ -5,6 +5,7 @@ import { CheckedIcon } from "../../assets/checked-icon";
 import { UncheckedIcon } from "../../assets/unchecked-icon";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import { MdOutlineDragIndicator } from "react-icons/md";
 
 export interface TodoItemProps extends TodoData {
   updateItem: (todoItemId: number, updatedItem: UpdateTodoData) => void;
@@ -32,18 +33,16 @@ export const TodoItem: React.FC<TodoItemProps> = ({
       ref={setNodeRef}
       style={style}
       {...attributes}
-      className='flex justify-between py-3'
+      className='flex justify-between my-5'
     >
-      <div className='flex items-center gap-5'>
-        <span
+      <div className='flex items-center gap-3'>
+        <div
           {...listeners}
-          className='cursor-grab active:cursor-grabbing px-2 text-gray-400'
+          className='flex items-center h-full cursor-grab active:cursor-grabbing text-gray-400'
           title='Drag to reorder'
         >
-          <p className=''>.</p>
-          <p>.</p>
-          <p>.</p>
-        </span>
+          <MdOutlineDragIndicator className='text-2xl' />
+        </div>
 
         <button
           onClick={() =>
@@ -57,7 +56,7 @@ export const TodoItem: React.FC<TodoItemProps> = ({
           {done ? <CheckedIcon /> : <UncheckedIcon />}
         </button>
 
-        <h2 className={`text-[24px] ${done ? "line-through" : ""}`}>{name}</h2>
+        <h2 className={`text-[18px] ${done ? "line-through" : ""}`}>{name}</h2>
       </div>
 
       <button

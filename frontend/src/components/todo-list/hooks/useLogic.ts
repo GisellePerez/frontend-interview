@@ -2,8 +2,12 @@ import { useTodoList } from "../../../hooks/useTodoList";
 import { CreateTodoData, TodoData } from "../../../types/todos";
 import { useActionsHistory } from "../../../hooks/useActionsHistory";
 import { useDragAndDrop } from "../../../hooks/useDragAndDrop";
+import { useState } from "react";
 
 export const useLogic = (listId: number) => {
+  const [isOpenHistoryLog, setisOpenHistoryLog] = useState(false);
+
+  /** Todo operations */
   const {
     todoList: todoListData,
     isLoading,
@@ -30,7 +34,7 @@ export const useLogic = (listId: number) => {
       logReorderAction,
     });
 
-  /** CRUD related functions */
+  /** User interactions functions (add, delete, etc) */
   const handleAddTodo = (data: CreateTodoData) =>
     addTodo.mutate(data, {
       onSuccess(data) {
@@ -78,5 +82,7 @@ export const useLogic = (listId: number) => {
     handleAddTodo,
     handleDeleteTodo,
     handleUpdateTodo,
+    isOpenHistoryLog,
+    setisOpenHistoryLog,
   };
 };

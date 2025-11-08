@@ -1,4 +1,5 @@
 import React, { Dispatch, SetStateAction } from "react";
+import { MdClose } from "react-icons/md";
 
 export interface DrawerProps {
   children: React.ReactNode;
@@ -41,7 +42,7 @@ export const Drawer: React.FC<DrawerProps> = ({
             className='p-4 ml-auto text-gray-500 hover:text-black'
             onClick={hangleCloseModal}
           >
-            Close
+            <MdClose />
           </button>
         </div>
 

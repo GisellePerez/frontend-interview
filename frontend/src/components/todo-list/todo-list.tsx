@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { CreateTodoData } from "../../types/todos";
 import { Link, useParams } from "react-router-dom";
 import { TodoItem } from "../todo-item/todo-item";
@@ -9,12 +9,11 @@ import { TrashZone } from "../trash-zone/trash-zone";
 import { useLogic } from "./hooks/useLogic";
 import { HistoryLog } from "../history-log/history-log";
 import { Drawer } from "../drawer/drawer";
+import { MdHistory } from "react-icons/md";
 
 const TodoList: React.FC = () => {
   const params = useParams();
   const listIdParam = Number(params.id);
-
-  const [isOpen, setIsOpen] = useState(false);
 
   const {
     todoListData,
@@ -27,6 +26,8 @@ const TodoList: React.FC = () => {
     handleAddTodo,
     handleDeleteTodo,
     handleUpdateTodo,
+    isOpenHistoryLog,
+    setisOpenHistoryLog,
   } = useLogic(listIdParam);
 
   if (isLoading) return <p>Loading...</p>;
@@ -35,13 +36,27 @@ const TodoList: React.FC = () => {
 
   return (
     <div className='flex flex-col items-center justify-center gap-5 m-auto w-[90%] max-w-[790px]'>
-      <div className='self-start'>
-        <Link to='/' className=' text-black underline'>
-          <p>&larr; Back to all lists</p>
-        </Link>
+      <div className='flex items-center justify-between gap-4 w-full'>
+        {/* Back link */}
+        <div>
+          <Link to='/' className='text-black underline'>
+            <p>&larr; Back</p>
+          </Link>
+        </div>
+
+        {/* Open History log button */}
+        <button
+          onClick={() => setisOpenHistoryLog(true)}
+          title='History log'
+          className='flex items-center justify-center p-1.5 rounded-full hover:bg-gray-100 hover:cursor-pointer transition-all duration-300'
+        >
+          <MdHistory className='text-2xl hover:opacity-85' />
+          <p className='pl-1 hidden md:block'>History log</p>
+        </button>
       </div>
 
       <div className='w-full  border-2 border-black rounded-xl overflow-hidden'>
+        {/* Title section */}
         <div className='bg-black py-4 flex justify-center'>
           <h1 className='text-white text-5xl font-bold'>
             {todoListData?.name ?? "To-Do List"}
@@ -49,10 +64,12 @@ const TodoList: React.FC = () => {
         </div>
 
         <div className='py-8 px-9'>
+          {/* Add form */}
           <AddForm<CreateTodoData> onSubmit={handleAddTodo} nameField='name' />
 
+          {/* Items list with draggable sections */}
           {todoListData?.todoItems?.length ? (
-            <div className='relative mb-5'>
+            <div className='relative'>
               <DndContext
                 onDragStart={handleDragStart}
                 onDragEnd={(event) =>
@@ -78,15 +95,17 @@ const TodoList: React.FC = () => {
                   </ul>
                 </SortableContext>
 
-                <TrashZone />
-
+                {/* Floating element being dragged */}
                 <DragOverlay>
                   {activeItem && (
                     <li className='flex justify-between py-3 bg-white shadow-xl rounded-md opacity-50 scale-105'>
-                      <h2 className='text-[24px]'>{activeItem.name}</h2>
+                      <h2 className='text-[24px]'> {activeItem.name}</h2>
                     </li>
                   )}
                 </DragOverlay>
+
+                {/* Section to drop items to delete */}
+                <TrashZone />
               </DndContext>
             </div>
           ) : (
@@ -97,9 +116,12 @@ const TodoList: React.FC = () => {
         </div>
       </div>
 
-      <button onClick={() => setIsOpen(true)}>open drawer</button>
-
-      <Drawer isOpen={isOpen} setIsOpen={setIsOpen} title='Action History'>
+      {/* History Log Drawer */}
+      <Drawer
+        isOpen={isOpenHistoryLog}
+        setIsOpen={setisOpenHistoryLog}
+        title='Action History'
+      >
         <HistoryLog actionHistory={actionHistory} />
       </Drawer>
     </div>
