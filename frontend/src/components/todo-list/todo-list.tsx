@@ -101,9 +101,11 @@ const TodoList: React.FC = () => {
             {actionHistory.map((action) => (
               <li key={action.id}>
                 {new Date(action.timestamp).toLocaleTimeString()}:
-                {action.type === "add" && `Added "${action.itemName}"`}
-                {action.type === "update" && `Updated "${action.itemName}"`}
-                {action.type === "delete" && `Deleted "${action.itemName}"`}
+                {action.type === "add" && `"${action.itemName}" was ADDED`}
+                {action.type === "update" && `"${action.itemName}" was UPDATED`}
+                {action.type === "delete" && `"${action.itemName}" was DELETED`}
+                {action.type === "reorder" &&
+                  `"${action.itemName}" was REORDERED`}
               </li>
             ))}
           </ul>

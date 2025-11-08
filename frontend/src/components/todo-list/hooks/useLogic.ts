@@ -14,12 +14,20 @@ export const useLogic = (listId: number) => {
   } = useTodoList(listId);
 
   /** Actions history */
-  const { actionHistory, logAddAction, logDeleteAction, logUpdateAction } =
-    useActionsHistory();
+  const {
+    actionHistory,
+    logAddAction,
+    logDeleteAction,
+    logUpdateAction,
+    logReorderAction,
+  } = useActionsHistory();
 
   /** Drag & Drop */
   const { activeItem, setActiveItem, handleDragEnd, handleDragStart } =
-    useDragAndDrop(listId, todoListData);
+    useDragAndDrop(listId, todoListData, {
+      // Passing the function here because if we call he hook somewhere else we are create a new instance and that overwrites history
+      logReorderAction,
+    });
 
   /** CRUD related functions */
   const handleAddTodo = (data: CreateTodoData) =>

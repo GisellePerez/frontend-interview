@@ -5,8 +5,18 @@ import { arrayMove } from "@dnd-kit/sortable";
 import { TRASH_ZONE_ID } from "../constants/constants";
 import { TodoData, TodoListData } from "../types/todos";
 
-export const useDragAndDrop = (listId: number, todoListData?: TodoListData) => {
+type UseDragAndDropOptions = {
+  logReorderAction?: (item: TodoData) => void;
+};
+
+export const useDragAndDrop = (
+  listId: number,
+  todoListData?: TodoListData,
+  options: UseDragAndDropOptions = {},
+) => {
   const queryClient = useQueryClient();
+  const { logReorderAction } = options;
+
   const [activeItem, setActiveItem] = useState<TodoData | null>(null);
 
   const handleDragStart = (event: DragStartEvent) => {
@@ -34,6 +44,7 @@ export const useDragAndDrop = (listId: number, todoListData?: TodoListData) => {
           todoItems: old.todoItems.filter((i) => i.id !== itemId),
         };
       });
+
       onDelete(itemId);
       setActiveItem(null);
       return;
@@ -52,6 +63,12 @@ export const useDragAndDrop = (listId: number, todoListData?: TodoListData) => {
         ...todoListData,
         todoItems: newOrder,
       });
+
+      const movedItem = todoListData.todoItems[oldIndex];
+
+      if (logReorderAction) {
+        logReorderAction(movedItem);
+      }
     }
 
     setActiveItem(null);

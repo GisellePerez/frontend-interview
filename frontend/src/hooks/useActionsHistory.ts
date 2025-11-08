@@ -39,11 +39,25 @@ export const useActionsHistory = () => {
     });
   };
 
+  const logReorderAction = (item: TodoData) => {
+    setActionHistory((prev) => [
+      ...prev,
+      {
+        id: crypto.randomUUID(),
+        type: "reorder",
+        itemId: item.id,
+        itemName: item.name,
+        timestamp: Date.now(),
+      },
+    ]);
+  };
+
   return {
     actionHistory,
     logAction,
     logAddAction,
     logDeleteAction,
     logUpdateAction,
+    logReorderAction,
   };
 };
