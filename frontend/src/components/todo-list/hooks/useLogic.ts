@@ -7,7 +7,7 @@ import { useState } from "react";
 export const useLogic = (listId: number) => {
   const [isOpenHistoryLog, setisOpenHistoryLog] = useState(false);
 
-  /** Todo operations */
+  /** Todo operations and data */
   const {
     todoList: todoListData,
     isLoading,
@@ -24,6 +24,7 @@ export const useLogic = (listId: number) => {
     logDeleteAction,
     logUpdateAction,
     logReorderAction,
+    clearHistory,
   } = useActionsHistory();
 
   /** Drag & Drop */
@@ -84,5 +85,6 @@ export const useLogic = (listId: number) => {
     handleUpdateTodo,
     isOpenHistoryLog,
     setisOpenHistoryLog,
+    clearHistory,
   };
 };

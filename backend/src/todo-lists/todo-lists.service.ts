@@ -66,6 +66,7 @@ export class TodoListsService {
       name: todoItemDto.name,
       description: todoItemDto.description,
       done: false,
+      order: todoItemDto.order ?? todoList.todoItems.length,
     };
 
     // Add the record
@@ -76,9 +77,9 @@ export class TodoListsService {
 
   findAllTodoItems(todoListId: number): TodoItem[] {
     const todoList = this.assertTodoListExists(todoListId);
-
-    return todoList.todoItems;
+    return todoList.todoItems.sort((a, b) => a.order - b.order);
   }
+
   findOneTodoItem(todoListId: number, todoItemId: number): TodoItem {
     const todoList = this.assertTodoListExists(todoListId);
 
@@ -97,6 +98,7 @@ export class TodoListsService {
     todoItem.name = todoItemDto.name ?? todoItem.name;
     todoItem.description = todoItemDto.description ?? todoItem.description;
     todoItem.done = todoItemDto.done ?? todoItem.done;
+    todoItem.order = todoItemDto.order ?? todoItem.order;
 
     return todoItem;
   }
@@ -107,6 +109,20 @@ export class TodoListsService {
 
     // Delete the record
     todoList.todoItems.splice(todoList.todoItems.indexOf(todoItem), 1);
+  }
+
+  reorderTodoItems(
+    todoListId: number,
+    order: { id: number; order: number }[],
+  ): TodoItem[] {
+    const todoList = this.assertTodoListExists(todoListId);
+
+    order.forEach(({ id, order }) => {
+      const item = todoList.todoItems.find((i) => i.id === id);
+      if (item) item.order = order;
+    });
+
+    return todoList.todoItems.sort((a, b) => a.order - b.order);
   }
 
   /**

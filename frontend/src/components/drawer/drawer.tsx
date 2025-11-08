@@ -39,7 +39,7 @@ export const Drawer: React.FC<DrawerProps> = ({
           )}
 
           <button
-            className='p-4 ml-auto text-gray-500 hover:text-black'
+            className='p-4 ml-auto  hover:text-gray-500 text-black text-xl'
             onClick={hangleCloseModal}
           >
             <MdClose />

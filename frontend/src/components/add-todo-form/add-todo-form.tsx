@@ -17,11 +17,17 @@ export const AddForm = <T extends FieldValues>({
   const {
     register,
     handleSubmit,
+    reset,
     formState: { isSubmitting },
   } = useForm<T>();
 
+  const handleFormSubmit: SubmitHandler<T> = async (data) => {
+    await onSubmit(data);
+    reset();
+  };
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(handleFormSubmit)}>
       <div className='flex justify-between rounded-full border-2 border-black'>
         <input
           className='w-full px-4 py-2 rounded-full'

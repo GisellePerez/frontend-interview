@@ -2,6 +2,6 @@
 
 @layer base {
   button {
-    @apply hover:cursor-pointer hover:opacity-85 transition-all duration-300;
+    @apply hover:cursor-pointer hover:opacity-75 transition-all duration-300;
   }
 }

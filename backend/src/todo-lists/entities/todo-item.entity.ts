@@ -1,4 +1,4 @@
-import { ApiProperty } from "@nestjs/swagger";
+import { ApiProperty } from '@nestjs/swagger';
 
 export class TodoItem {
   @ApiProperty({
@@ -6,7 +6,7 @@ export class TodoItem {
     example: 1,
   })
   id: number;
-  
+
   @ApiProperty({
     description: 'Name of the todo item',
     example: 'Buy milk',
@@ -25,4 +25,7 @@ export class TodoItem {
     example: false,
   })
   done: boolean;
+
+  @ApiProperty({ required: false })
+  order?: number;
 }

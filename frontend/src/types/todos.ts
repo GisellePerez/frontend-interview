@@ -6,6 +6,7 @@ export interface TodoData {
   name: string;
   description: string;
   done: boolean;
+  order?: number;
 }
 
 export type UpdateTodoData = Omit<TodoData, "id">;

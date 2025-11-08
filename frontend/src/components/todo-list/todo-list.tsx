@@ -28,6 +28,7 @@ const TodoList: React.FC = () => {
     handleUpdateTodo,
     isOpenHistoryLog,
     setisOpenHistoryLog,
+    clearHistory,
   } = useLogic(listIdParam);
 
   if (isLoading) return <p>Loading...</p>;
@@ -122,7 +123,7 @@ const TodoList: React.FC = () => {
         setIsOpen={setisOpenHistoryLog}
         title='Action History'
       >
-        <HistoryLog actionHistory={actionHistory} />
+        <HistoryLog actionHistory={actionHistory} clearHistory={clearHistory} />
       </Drawer>
     </div>
   );

@@ -25,19 +25,19 @@ export const TodoListButton: React.FC<TodoListButtonProps> = ({
       <div className='flex items-center gap-4'>
         <Link to={`/${URLS.TODO_LIST}/${id}`}>
           <button
-            className='py-3 px-3 rounded-full bg-purple-400'
+            className='py-3 px-3 rounded-full border-2 border-purple-800 bg-purple-200'
             title='See more'
           >
-            <IoMdEye className='text-gray-900' />
+            <IoMdEye className='text-purple-800' />
           </button>
         </Link>
 
         <button
-          className='py-3 px-3 rounded-full bg-red-400'
+          className='py-3 px-3 rounded-full border-2 border-red-700 bg-red-200'
           onClick={() => deleteTodoList(id)}
           title='Delete list'
         >
-          <MdDelete className='text-gray-900' />
+          <MdDelete className='text-red-700' />
         </button>
       </div>
     </div>

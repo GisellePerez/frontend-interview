@@ -89,3 +89,25 @@ export const toggleTodoItemDone = async (
   );
   return response.json();
 };
+
+export const reorderTodoItems = async (
+  todoListId: number,
+  order: { id: number; order: number }[],
+): Promise<TodoData[]> => {
+  const response = await fetch(
+    `${API_BASE_URL}/${TODO_LISTS}/${todoListId}/reorder`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ order }),
+    },
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to reorder todo items");
+  }
+
+  return response.json();
+};
