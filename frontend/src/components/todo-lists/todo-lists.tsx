@@ -1,12 +1,21 @@
 import { Container } from "../container/container";
 import { CreateTodoListData } from "../../types/todos";
-import { TodoListButton } from "../todo-list-button/todo-list-button";
 import { AddForm } from "../add-todo-form/add-todo-form";
-import { useTodoLists } from "../../hooks/useTodoLists";
+import { TodoListCard } from "../todo-list-card/todo-list-card";
+import { useLogic } from "./logic";
+import { Modal } from "../ui/modal/modal";
 
 export const TodoLists: React.FC = () => {
-  const { todoLists, isLoading, isError, addTodoList, deleteTodoList } =
-    useTodoLists();
+  const {
+    todoLists,
+    isLoading,
+    isError,
+    addTodoList,
+    handleConfirmDelete,
+    handleCancelDelete,
+    selectedListId,
+    setSelectedListId,
+  } = useLogic();
 
   if (isLoading) return <p>Loading...</p>;
 
@@ -18,25 +27,34 @@ export const TodoLists: React.FC = () => {
 
   return (
     <Container>
-      <h1 className='mb-5 text-black text-5xl font-bold'>My Todo Lists</h1>
+      <h1 className='text-black mb-5 md:mb-8'>My Todo Lists</h1>
 
       <AddForm<CreateTodoListData>
-        placeholder='New list name'
+        placeholder='Add new todo list...'
         buttonText='Add'
         nameField='name'
         onSubmit={(data) => addTodoList.mutate({ name: data.name })}
       />
 
-      <ul className='my-5 min-w-[500px]'>
+      <ul className='my-5 max-w-full w-full h-[70vh] overflow-y-auto'>
         {(todoLists || []).map((list) => (
           <li key={list.id}>
-            <TodoListButton
+            <TodoListCard
               {...list}
-              deleteTodoList={() => deleteTodoList.mutate(list.id)}
+              deleteTodoList={() => setSelectedListId(list.id)}
             />
           </li>
         ))}
       </ul>
+
+      {selectedListId !== null && (
+        <Modal
+          title='Delete this list?'
+          message='This action cannot be undone. All tasks inside the list will also be deleted.'
+          onConfirm={handleConfirmDelete}
+          onCancel={handleCancelDelete}
+        />
+      )}
     </Container>
   );
 };

@@ -9,14 +9,14 @@ export interface TodoListButtonProps extends TodoListData {
   deleteTodoList: (id: TodoListData["id"]) => void;
 }
 
-export const TodoListButton: React.FC<TodoListButtonProps> = ({
+export const TodoListCard: React.FC<TodoListButtonProps> = ({
   id,
   name,
   todoItems,
   deleteTodoList,
 }) => {
   return (
-    <div className='flex items-center justify-between py-4 px-5 mb-5 border-2 border-black rounded-xl'>
+    <div className='flex items-center justify-between py-4 px-5 mb-4 md:mb-5 border-2 border-black rounded-xl max-w-full'>
       <div>
         <h2 className='text-xl font-bold'>{name}</h2>
         <p>{`(${(todoItems || [])?.length}) items`}</p>

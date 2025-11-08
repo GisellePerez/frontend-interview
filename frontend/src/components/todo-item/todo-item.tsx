@@ -1,11 +1,13 @@
 import React from "react";
 import { TodoData, UpdateTodoData } from "../../types/todos";
-import { DeleteIcon } from "../../assets/delete-icon";
-import { CheckedIcon } from "../../assets/checked-icon";
-import { UncheckedIcon } from "../../assets/unchecked-icon";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { MdOutlineDragIndicator } from "react-icons/md";
+import {
+  MdCheckCircle,
+  MdClose,
+  MdOutlineCircle,
+  MdOutlineDragIndicator,
+} from "react-icons/md";
 
 export interface TodoItemProps extends TodoData {
   updateItem: (todoItemId: number, updatedItem: UpdateTodoData) => void;
@@ -33,12 +35,12 @@ export const TodoItem: React.FC<TodoItemProps> = ({
       ref={setNodeRef}
       style={style}
       {...attributes}
-      className='flex justify-between my-5'
+      className='flex justify-between items-center my-5'
     >
       <div className='flex items-center gap-3'>
         <div
           {...listeners}
-          className='flex items-center h-full cursor-grab active:cursor-grabbing text-gray-400'
+          className='flex items-center h-full cursor-grab active:cursor-grabbing text-gray-400 '
           title='Drag to reorder'
         >
           <MdOutlineDragIndicator className='text-2xl' />
@@ -52,18 +54,27 @@ export const TodoItem: React.FC<TodoItemProps> = ({
               done: !done,
             })
           }
+          className='flex items-center gap-3'
         >
-          {done ? <CheckedIcon /> : <UncheckedIcon />}
-        </button>
+          <div className='rounded-full h-8 w-8 flex items-center justify-center'>
+            {done ? (
+              <MdCheckCircle className='text-3xl ' />
+            ) : (
+              <MdOutlineCircle className='text-3xl' />
+            )}
+          </div>
 
-        <h2 className={`text-[18px] ${done ? "line-through" : ""}`}>{name}</h2>
+          <h2 className={`text-[18px] ${done ? "line-through" : ""}`}>
+            {name}
+          </h2>
+        </button>
       </div>
 
       <button
         onClick={() => deleteItem(id)}
-        className='p-1 rounded-full hover:cursor-pointer hover:bg-red-100 transition-all'
+        className='p-1 rounded-full hover:cursor-pointer border-2 border-transparent hover:bg-red-100 hover:text-red-700 hover:border-red-700  transition-all h-8 w-8 flex items-center justify-center'
       >
-        <DeleteIcon />
+        <MdClose className='text-3xl' />
       </button>
     </li>
   );

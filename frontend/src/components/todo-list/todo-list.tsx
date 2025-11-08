@@ -36,7 +36,7 @@ const TodoList: React.FC = () => {
   if (isError || !todoListData) return <p>Error loading todo list</p>;
 
   return (
-    <div className='flex flex-col items-center justify-center gap-5 m-auto w-[90%] max-w-[790px]'>
+    <div className='flex flex-col items-center justify-center gap-3 md:gap-5 m-auto w-full'>
       <div className='flex items-center justify-between gap-4 w-full'>
         {/* Back link */}
         <div>
@@ -59,9 +59,7 @@ const TodoList: React.FC = () => {
       <div className='w-full  border-2 border-black rounded-xl overflow-hidden'>
         {/* Title section */}
         <div className='bg-black py-4 flex justify-center'>
-          <h1 className='text-white text-5xl font-bold'>
-            {todoListData?.name ?? "To-Do List"}
-          </h1>
+          <h1 className='text-white'>{todoListData?.name ?? "To-Do List"}</h1>
         </div>
 
         <div className='py-8 px-9'>
@@ -84,7 +82,7 @@ const TodoList: React.FC = () => {
                 }
               >
                 <SortableContext items={todoListData.todoItems}>
-                  <ul className='mt-5 space-y-2'>
+                  <ul className='mt-5 space-y-2 max-h-[40vh] overflow-y-auto'>
                     {(todoListData?.todoItems || []).map((item) => (
                       <TodoItem
                         key={item.id}
