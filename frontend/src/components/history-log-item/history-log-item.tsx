@@ -21,11 +21,18 @@ const MESSAGES = {
   reorder: "was REORDERED",
 } as const;
 
-const COLORS = {
-  add: "green",
-  update: "purple",
-  delete: "red",
-  reorder: "blue",
+const BG_COLORS = {
+  add: "bg-green-100",
+  update: "bg-purple-100",
+  delete: "bg-red-100",
+  reorder: "bg-blue-100",
+} as const;
+
+const TEXT_COLORS = {
+  add: "text-green-500",
+  update: "text-purple-500",
+  delete: "text-red-500",
+  reorder: "text-blue-500",
 } as const;
 
 export const HistoryLogItem: React.FC<TodoAction> = ({
@@ -35,13 +42,12 @@ export const HistoryLogItem: React.FC<TodoAction> = ({
 }) => {
   const Icon = ICONS[type];
   const message = MESSAGES[type];
-  const color = COLORS[type];
+  const textColor = TEXT_COLORS[type];
+  const bgColor = BG_COLORS[type];
 
   return (
-    <div
-      className={`flex items-center gap-2 mb-3 p-2 rounded-md bg-${color}-200`}
-    >
-      <Icon className={`text-${color}-500`} />
+    <div className={`flex items-center gap-2 mb-3 p-2 rounded-md ${bgColor}`}>
+      <Icon className={textColor} />
 
       <p>
         {`"${itemName}" ${message}`}
