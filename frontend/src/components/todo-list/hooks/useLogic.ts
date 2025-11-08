@@ -25,7 +25,8 @@ export const useLogic = (listId: number) => {
   /** Drag & Drop */
   const { activeItem, setActiveItem, handleDragEnd, handleDragStart } =
     useDragAndDrop(listId, todoListData, {
-      // Passing the function here because if we call he hook somewhere else we are create a new instance and that overwrites history
+      // NOTE: Passing the function here because if we call the useDragAndDrop hook somewhere else
+      // we create a new instance and that overwrites history
       logReorderAction,
     });
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { CreateTodoData } from "../../types/todos";
 import { Link, useParams } from "react-router-dom";
 import { TodoItem } from "../todo-item/todo-item";
@@ -6,12 +6,15 @@ import { AddForm } from "../add-todo-form/add-todo-form";
 import { DndContext, DragOverlay } from "@dnd-kit/core";
 import { SortableContext } from "@dnd-kit/sortable";
 import { TrashZone } from "../trash-zone/trash-zone";
-
 import { useLogic } from "./hooks/useLogic";
+import { HistoryLog } from "../history-log/history-log";
+import { Drawer } from "../drawer/drawer";
 
 const TodoList: React.FC = () => {
   const params = useParams();
   const listIdParam = Number(params.id);
+
+  const [isOpen, setIsOpen] = useState(false);
 
   const {
     todoListData,
@@ -92,25 +95,13 @@ const TodoList: React.FC = () => {
             </div>
           )}
         </div>
-
-        <hr />
-
-        <div className='action-history'>
-          <h2>Action History</h2>
-          <ul>
-            {actionHistory.map((action) => (
-              <li key={action.id}>
-                {new Date(action.timestamp).toLocaleTimeString()}:
-                {action.type === "add" && `"${action.itemName}" was ADDED`}
-                {action.type === "update" && `"${action.itemName}" was UPDATED`}
-                {action.type === "delete" && `"${action.itemName}" was DELETED`}
-                {action.type === "reorder" &&
-                  `"${action.itemName}" was REORDERED`}
-              </li>
-            ))}
-          </ul>
-        </div>
       </div>
+
+      <button onClick={() => setIsOpen(true)}>open drawer</button>
+
+      <Drawer isOpen={isOpen} setIsOpen={setIsOpen} title='Action History'>
+        <HistoryLog actionHistory={actionHistory} />
+      </Drawer>
     </div>
   );
 };
