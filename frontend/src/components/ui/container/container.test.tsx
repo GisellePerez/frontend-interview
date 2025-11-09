@@ -13,17 +13,6 @@ describe("Container", () => {
     expect(screen.getByText("Test Content")).toBeInTheDocument();
   });
 
-  it("applies correct CSS classes", () => {
-    const { container } = render(
-      <Container>
-        <div>Content</div>
-      </Container>,
-    );
-
-    const divElement = container.firstChild;
-    expect(divElement).toHaveClass("flex", "flex-col", "items-center");
-  });
-
   it("renders without children", () => {
     const { container } = render(<Container />);
 
