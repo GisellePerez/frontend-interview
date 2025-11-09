@@ -34,14 +34,14 @@ export const TodoItem: React.FC<TodoItemProps> = ({
     <li
       ref={setNodeRef}
       style={style}
-      {...attributes}
       className='flex justify-between items-center my-5'
       data-testid='todo-item'
     >
-      <div className='flex items-center gap-3'>
+      <div className='flex items-center gap-3 flex-1 min-w-0'>
         <div
           {...listeners}
-          className='flex items-center h-full cursor-grab active:cursor-grabbing text-gray-400 '
+          {...attributes}
+          className='flex items-center h-full cursor-grab active:cursor-grabbing text-gray-400 touch-none'
           title='Drag to reorder'
           data-testid='todo-item-drag-handle'
         >
@@ -56,10 +56,10 @@ export const TodoItem: React.FC<TodoItemProps> = ({
               done: !done,
             })
           }
-          className='flex items-center gap-3'
+          className='flex items-center gap-3 min-w-0 flex-1'
           data-testid='todo-item-update-button'
         >
-          <div className='rounded-full h-8 w-8 flex items-center justify-center'>
+          <div className='rounded-full h-8 w-8 flex items-center justify-center shrink-0'>
             {done ? (
               <MdCheckCircle
                 className='text-3xl'
@@ -74,7 +74,7 @@ export const TodoItem: React.FC<TodoItemProps> = ({
           </div>
 
           <h2
-            className={`text-[18px] ${done ? "line-through" : ""}`}
+            className={`text-[18px] ${done ? "line-through" : ""} truncate`}
             data-testid='todo-item-name'
           >
             {name}
