@@ -1,6 +1,6 @@
 import React from "react";
 import { CreateTodoData } from "../../types/todos";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, Navigate } from "react-router-dom";
 import { TodoItem } from "../todo-item/todo-item";
 import { AddForm } from "../add-todo-form/add-todo-form";
 import { DndContext, DragOverlay } from "@dnd-kit/core";
@@ -35,7 +35,7 @@ const TodoList: React.FC = () => {
 
   if (isLoading) return <p>{t("todoList.loading")}</p>;
 
-  if (isError || !todoListData) return <p>{t("todoList.error")}</p>;
+  if (isError || !todoListData) return <Navigate to='/404' replace />;
 
   return (
     <div className='flex flex-col items-center justify-center gap-3 md:gap-5 m-auto w-full'>

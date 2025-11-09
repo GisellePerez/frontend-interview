@@ -23,6 +23,7 @@ export const useTodoList = (listId: number) => {
   } = useQuery<TodoListData>({
     queryKey: ["todoList", listId],
     queryFn: () => fetchTodoListById(listId),
+    retry: false, // Don't retry on 404 errors
   });
 
   /** Add a new todo item */

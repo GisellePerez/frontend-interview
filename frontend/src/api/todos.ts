@@ -13,13 +13,22 @@ const { TODO_LISTS, TODO_ITEMS } = API_URL_SEGMENTS;
  */
 export const fetchAllTodoLists = async (): Promise<TodoListData[]> => {
   const response = await fetch(`${API_BASE_URL}/${TODO_LISTS}`);
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch todo lists: ${response.status}`);
+  }
+
   return response.json();
 };
 
 export const deleteTodoListById = async (todoListId: number): Promise<void> => {
-  await fetch(`${API_BASE_URL}/${TODO_LISTS}/${todoListId}`, {
+  const response = await fetch(`${API_BASE_URL}/${TODO_LISTS}/${todoListId}`, {
     method: "DELETE",
   });
+
+  if (!response.ok) {
+    throw new Error(`Failed to delete todo list: ${response.status}`);
+  }
 };
 
 export const createTodoList = async (
@@ -30,6 +39,11 @@ export const createTodoList = async (
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
   });
+
+  if (!response.ok) {
+    throw new Error(`Failed to create todo list: ${response.status}`);
+  }
+
   return response.json();
 };
 
@@ -37,6 +51,11 @@ export const fetchTodoListById = async (
   todoListId: number,
 ): Promise<TodoListData> => {
   const response = await fetch(`${API_BASE_URL}/${TODO_LISTS}/${todoListId}`);
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch todo list: ${response.status}`);
+  }
+
   return response.json();
 };
 

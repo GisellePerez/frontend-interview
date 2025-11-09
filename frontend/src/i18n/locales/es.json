@@ -49,5 +49,10 @@
     "delete": "Eliminar",
     "save": "Guardar",
     "close": "Cerrar"
+  },
+  "notFound": {
+    "title": "No se encontró la página",
+    "message": "La página o lista de tareas que buscas no existe.",
+    "backButton": "Volver al Inicio"
   }
 }

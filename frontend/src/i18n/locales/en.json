@@ -49,5 +49,10 @@
     "delete": "Delete",
     "save": "Save",
     "close": "Close"
+  },
+  "notFound": {
+    "title": "Page Not Found",
+    "message": "The page or todo list you're looking for doesn't exist.",
+    "backButton": "Back to Home"
   }
 }
