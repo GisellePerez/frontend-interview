@@ -7,6 +7,7 @@ export const TrashZone: React.FC = () => {
 
   return (
     <div
+      data-testid='trash-zone'
       ref={setNodeRef}
       className={`flex items-center justify-center gap-2 p-5 mt-6 text-red-700 border-2 border-dashed border-red-700 rounded-2xl ${
         isOver
@@ -17,9 +18,11 @@ export const TrashZone: React.FC = () => {
         zIndex: 50,
       }}
     >
-      <MdDelete />
+      <MdDelete data-testid='trash-zone-delete-icon' />
 
-      <p className='text-sm '>Drag items here to delete them</p>
+      <p className='text-sm' data-testid='trash-zone-text'>
+        Drag items here to delete them
+      </p>
     </div>
   );
 };

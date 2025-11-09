@@ -46,13 +46,19 @@ export const HistoryLogItem: React.FC<TodoAction> = ({
   const bgColor = BG_COLORS[type];
 
   return (
-    <div className={`flex items-center gap-2 mb-3 p-2 rounded-md ${bgColor}`}>
-      <Icon className={textColor} />
+    <div
+      className={`flex items-center gap-2 mb-3 p-2 rounded-md ${bgColor}`}
+      data-testid='history-log-item'
+    >
+      <Icon className={textColor} data-testid='history-log-icon' />
 
-      <p>
-        {`"${itemName}" ${message}`}
+      <p data-testid='history-log-text'>
+        <span data-testid='history-log-message'>{`"${itemName}" ${message}`}</span>
 
-        <span className='text-gray-500 ml-2'>
+        <span
+          className='text-gray-500 ml-2'
+          data-testid='history-log-timestamp'
+        >
           ({new Date(timestamp).toLocaleTimeString()})
         </span>
       </p>

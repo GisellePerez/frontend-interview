@@ -16,13 +16,14 @@ export const Drawer: React.FC<DrawerProps> = ({
 }) => {
   const hangleCloseModal = () => setIsOpen(false);
   return (
-    <>
+    <React.Fragment data-testid='drawer-component'>
       {/* Overlay */}
       <div
         className={`fixed inset-0 z-40 bg-gray-800 transition-opacity duration-300 ${
           isOpen ? "opacity-80 visible" : "opacity-0 invisible"
         }`}
         onClick={hangleCloseModal}
+        data-testid='drawer-overlay'
       />
 
       {/* Drawer panel */}
@@ -33,12 +34,18 @@ export const Drawer: React.FC<DrawerProps> = ({
       >
         <div className='flex items-center justify-between'>
           {title ? (
-            <header className='p-4 font-bold text-lg'>{title}</header>
+            <header
+              data-testid='drawer-title'
+              className='p-4 font-bold text-lg'
+            >
+              {title}
+            </header>
           ) : (
             <></>
           )}
 
           <button
+            data-testid='drawer-close-button'
             className='p-4 ml-auto  hover:text-gray-500 text-black text-xl'
             onClick={hangleCloseModal}
           >
@@ -46,10 +53,13 @@ export const Drawer: React.FC<DrawerProps> = ({
           </button>
         </div>
 
-        <div className='p-4 overflow-y-auto h-[calc(100%-4rem)]'>
+        <div
+          className='p-4 overflow-y-auto h-[calc(100%-4rem)]'
+          data-testid='drawer-content'
+        >
           {children}
         </div>
       </aside>
-    </>
+    </React.Fragment>
   );
 };

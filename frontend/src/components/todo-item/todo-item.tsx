@@ -36,12 +36,14 @@ export const TodoItem: React.FC<TodoItemProps> = ({
       style={style}
       {...attributes}
       className='flex justify-between items-center my-5'
+      data-testid='todo-item'
     >
       <div className='flex items-center gap-3'>
         <div
           {...listeners}
           className='flex items-center h-full cursor-grab active:cursor-grabbing text-gray-400 '
           title='Drag to reorder'
+          data-testid='todo-item-drag-handle'
         >
           <MdOutlineDragIndicator className='text-2xl' />
         </div>
@@ -55,16 +57,26 @@ export const TodoItem: React.FC<TodoItemProps> = ({
             })
           }
           className='flex items-center gap-3'
+          data-testid='todo-item-update-button'
         >
           <div className='rounded-full h-8 w-8 flex items-center justify-center'>
             {done ? (
-              <MdCheckCircle className='text-3xl ' />
+              <MdCheckCircle
+                className='text-3xl'
+                data-testid='todo-item-checked-icon'
+              />
             ) : (
-              <MdOutlineCircle className='text-3xl' />
+              <MdOutlineCircle
+                className='text-3xl'
+                data-testid='todo-item-unchecked-icon'
+              />
             )}
           </div>
 
-          <h2 className={`text-[18px] ${done ? "line-through" : ""}`}>
+          <h2
+            className={`text-[18px] ${done ? "line-through" : ""}`}
+            data-testid='todo-item-name'
+          >
             {name}
           </h2>
         </button>
@@ -73,6 +85,7 @@ export const TodoItem: React.FC<TodoItemProps> = ({
       <button
         onClick={() => deleteItem(id)}
         className='p-1 rounded-full hover:cursor-pointer border-2 border-transparent hover:bg-red-100 hover:text-red-700 hover:border-red-700  transition-all h-8 w-8 flex items-center justify-center'
+        data-testid='todo-item-delete-button'
       >
         <MdClose className='text-3xl' />
       </button>
