@@ -1,5 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { LocalButton } from "../ui/locale-button/locale-button";
 
 export const LanguageSwitcher: React.FC = () => {
   const { i18n } = useTranslation();
@@ -10,29 +11,21 @@ export const LanguageSwitcher: React.FC = () => {
 
   return (
     <div className='flex gap-2 items-center' data-testid='language-switcher'>
-      <button
+      <LocalButton
         onClick={() => changeLanguage("en")}
-        className={`px-3 py-1 rounded-md transition-all ${
-          i18n.language === "en"
-            ? "bg-black text-white"
-            : "bg-gray-200 text-black hover:bg-gray-300"
-        }`}
+        variant={i18n.language === "en" ? "primary" : "secondary"}
         data-testid='language-en-button'
       >
         EN
-      </button>
+      </LocalButton>
 
-      <button
+      <LocalButton
         onClick={() => changeLanguage("es")}
-        className={`px-3 py-1 rounded-md transition-all ${
-          i18n.language === "es"
-            ? "bg-black text-white"
-            : "bg-gray-200 text-black hover:bg-gray-300"
-        }`}
+        variant={i18n.language === "es" ? "primary" : "secondary"}
         data-testid='language-es-button'
       >
         ES
-      </button>
+      </LocalButton>
     </div>
   );
 };
