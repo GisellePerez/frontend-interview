@@ -1,0 +1,62 @@
+import React from "react";
+import { TodoAction } from "../../types/todos";
+import {
+  MdControlPoint,
+  MdOutlineCancel,
+  MdOutlineChangeCircle,
+  MdOutlineUpdate,
+} from "react-icons/md";
+import { useTranslation } from "react-i18next";
+
+const ICONS = {
+  add: MdControlPoint,
+  update: MdOutlineUpdate,
+  delete: MdOutlineCancel,
+  reorder: MdOutlineChangeCircle,
+} as const;
+
+const BG_COLORS = {
+  add: "bg-green-100",
+  update: "bg-purple-100",
+  delete: "bg-red-100",
+  reorder: "bg-blue-100",
+} as const;
+
+const TEXT_COLORS = {
+  add: "text-green-500",
+  update: "text-purple-500",
+  delete: "text-red-500",
+  reorder: "text-blue-500",
+} as const;
+
+export const HistoryLogItem: React.FC<TodoAction> = ({
+  type,
+  itemName,
+  timestamp,
+}) => {
+  const { t } = useTranslation();
+  const Icon = ICONS[type];
+  const message = t(`historyLog.actions.${type}`);
+  const textColor = TEXT_COLORS[type];
+  const bgColor = BG_COLORS[type];
+
+  return (
+    <div
+      className={`flex items-center gap-2 mb-3 p-2 rounded-md ${bgColor}`}
+      data-testid='history-log-item'
+    >
+      <Icon className={textColor} data-testid='history-log-icon' />
+
+      <p data-testid='history-log-text'>
+        <span data-testid='history-log-message'>{`"${itemName}" ${message}`}</span>
+
+        <span
+          className='text-gray-500 ml-2'
+          data-testid='history-log-timestamp'
+        >
+          ({new Date(timestamp).toLocaleTimeString()})
+        </span>
+      </p>
+    </div>
+  );
+};

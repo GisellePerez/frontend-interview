@@ -1,4 +1,3 @@
-
 # frontend-interview
 
 This repository contains a simple Todo List API built with NestJS and TypeScript, along with a React Vite project scaffold.
@@ -42,3 +41,8 @@ $ npm run dev
 
 We strongly believe in giving back :rocket:. Let's work together [`Get in touch`](https://crunchloop.io/#contact).
 
+## Testing
+
+- Libraries: Vitest, Jest, React Testing Library
+- To run tests: `npm run test`
+- _Note: node version should be >=20.0.0 and npm version >=10.0.0 (you can run `nvm use` to switch to the correct version if you have nvm installed)_

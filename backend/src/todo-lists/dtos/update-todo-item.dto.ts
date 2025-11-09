@@ -11,4 +11,8 @@ export class UpdateTodoItemDto extends PartialType(AddTodoItemDto) {
   @IsBoolean()
   @IsOptional()
   done: boolean;
+
+  @ApiProperty()
+  @IsOptional()
+  order?: number;
 }

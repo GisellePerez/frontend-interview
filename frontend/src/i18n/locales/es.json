@@ -1,0 +1,58 @@
+{
+  "todoLists": {
+    "title": "Mis Listas de Tareas",
+    "loading": "Cargando...",
+    "error": "Error al cargar las listas.",
+    "empty": "No hay listas para mostrar",
+    "addPlaceholder": "Agregar nueva lista...",
+    "addButton": "Agregar",
+    "deleteModal": {
+      "title": "¿Eliminar esta lista?",
+      "message": "Esta acción no se puede deshacer. Todas las tareas dentro de la lista también serán eliminadas.",
+      "confirm": "Eliminar",
+      "cancel": "Cancelar"
+    },
+    "itemCount": "{{count}} elemento",
+    "itemCount_other": "{{count}} elementos"
+  },
+  "todoList": {
+    "back": "Volver",
+    "historyLog": "Historial de acciones",
+    "loading": "Cargando...",
+    "error": "Error al cargar la lista de tareas",
+    "addPlaceholder": "Agregar tarea...",
+    "noTasks": "No se han ingresado tareas aún",
+    "dragToReorder": "Arrastra para reordenar",
+    "historyTitle": "Historial de Acciones"
+  },
+  "trashZone": {
+    "message": "Arrastra elementos aquí para eliminarlos"
+  },
+  "historyLog": {
+    "title": "Historial de Acciones",
+    "empty": "No se han registrado acciones aún",
+    "clearHistory": "Limpiar historial",
+    "actions": {
+      "add": "fue AGREGADO",
+      "update": "fue ACTUALIZADO",
+      "delete": "fue ELIMINADO",
+      "reorder": "fue REORDENADO"
+    }
+  },
+  "form": {
+    "required": "Este campo es obligatorio",
+    "minLength": "Debe tener al menos {{min}} caracteres"
+  },
+  "common": {
+    "add": "Agregar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "save": "Guardar",
+    "close": "Cerrar"
+  },
+  "notFound": {
+    "title": "No se encontró la página",
+    "message": "La página o lista de tareas que buscas no existe.",
+    "backButton": "Volver al Inicio"
+  }
+}

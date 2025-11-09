@@ -1,4 +1,4 @@
-import { ApiProperty } from "@nestjs/swagger";
+import { ApiProperty } from '@nestjs/swagger';
 import { IsOptional, IsString } from 'class-validator';
 
 export class AddTodoItemDto {
@@ -18,4 +18,12 @@ export class AddTodoItemDto {
   @IsString()
   @IsOptional()
   description?: string;
+
+  @ApiProperty({
+    description: 'Description of the todo item',
+    example: 'Buy a gallon of milk from the store',
+    required: false,
+  })
+  @IsOptional()
+  order?: number;
 }
