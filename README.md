@@ -43,6 +43,6 @@ We strongly believe in giving back :rocket:. Let's work together [`Get in touch`
 
 ## Testing
 
-- Libraries: Vitest, Jest, React Testing Library
+- Libraries: Vitest & React Testing Library
 - To run tests: `npm run test`
 - _Note: node version should be >=20.0.0 and npm version >=10.0.0 (you can run `nvm use` to switch to the correct version if you have nvm installed)_
