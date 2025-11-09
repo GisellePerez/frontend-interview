@@ -76,6 +76,11 @@ export const addTodoItem = async (
       body: JSON.stringify({ name: payload }),
     },
   );
+
+  if (!response.ok) {
+    throw new Error(`Failed to add todo item: ${response.status}`);
+  }
+
   return response.json();
 };
 
@@ -83,12 +88,16 @@ export const deleteTodoItem = async (
   todoListId: number,
   todoItemId: number,
 ): Promise<void> => {
-  await fetch(
+  const response = await fetch(
     `${API_BASE_URL}/${TODO_LISTS}/${todoListId}/${TODO_ITEMS}/${todoItemId}`,
     {
       method: "DELETE",
     },
   );
+
+  if (!response.ok) {
+    throw new Error(`Failed to delete todo item: ${response.status}`);
+  }
 };
 
 export const toggleTodoItemDone = async (
@@ -106,6 +115,11 @@ export const toggleTodoItemDone = async (
       body: JSON.stringify(payload),
     },
   );
+
+  if (!response.ok) {
+    throw new Error(`Failed to update todo item: ${response.status}`);
+  }
+
   return response.json();
 };
 
