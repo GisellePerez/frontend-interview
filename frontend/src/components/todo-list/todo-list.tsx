@@ -8,9 +8,10 @@ import { SortableContext } from "@dnd-kit/sortable";
 import { TrashZone } from "../trash-zone/trash-zone";
 import { useLogic } from "./hooks/useLogic";
 import { HistoryLog } from "../history-log/history-log";
-import { Drawer } from "../drawer/drawer";
+
 import { MdHistory } from "react-icons/md";
 import { useTranslation } from "react-i18next";
+import { Drawer } from "../ui/drawer/drawer";
 
 const TodoList: React.FC = () => {
   const { t } = useTranslation();

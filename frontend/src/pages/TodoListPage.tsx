@@ -1,6 +1,6 @@
-import { Container } from "../components/container/container";
 import TodoList from "../components/todo-list/todo-list";
 import { LanguageSwitcher } from "../components/language-switcher/language-switcher";
+import { Container } from "../components/ui/container/container";
 
 export const TodoListPage = () => {
   return (

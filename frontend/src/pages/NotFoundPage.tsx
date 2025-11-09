@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import { Container } from "../components/container/container";
 import { useTranslation } from "react-i18next";
+import { Container } from "../components/ui/container/container";
 
 export const NotFoundPage = () => {
   const { t } = useTranslation();

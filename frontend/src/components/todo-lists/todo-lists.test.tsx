@@ -6,7 +6,7 @@ import { BrowserRouter } from "react-router-dom";
 
 // Mock the logic hook
 const mockUseLogic = vi.fn();
-vi.mock("./logic", () => ({
+vi.mock("./hooks/usLogic", () => ({
   useLogic: () => mockUseLogic(),
 }));
 

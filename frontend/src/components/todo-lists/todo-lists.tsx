@@ -1,10 +1,10 @@
-import { Container } from "../container/container";
 import { CreateTodoListData } from "../../types/todos";
 import { AddForm } from "../add-todo-form/add-todo-form";
 import { TodoListCard } from "../todo-list-card/todo-list-card";
-import { useLogic } from "./logic";
 import { Modal } from "../ui/modal/modal";
 import { useTranslation } from "react-i18next";
+import { Container } from "../ui/container/container";
+import { useLogic } from "./hooks/usLogic";
 
 export const TodoLists: React.FC = () => {
   const { t } = useTranslation();
