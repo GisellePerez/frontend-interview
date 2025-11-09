@@ -6,19 +6,13 @@ import {
   MdOutlineChangeCircle,
   MdOutlineUpdate,
 } from "react-icons/md";
+import { useTranslation } from "react-i18next";
 
 const ICONS = {
   add: MdControlPoint,
   update: MdOutlineUpdate,
   delete: MdOutlineCancel,
   reorder: MdOutlineChangeCircle,
-} as const;
-
-const MESSAGES = {
-  add: "was ADDED",
-  update: "was UPDATED",
-  delete: "was DELETED",
-  reorder: "was REORDERED",
 } as const;
 
 const BG_COLORS = {
@@ -40,8 +34,9 @@ export const HistoryLogItem: React.FC<TodoAction> = ({
   itemName,
   timestamp,
 }) => {
+  const { t } = useTranslation();
   const Icon = ICONS[type];
-  const message = MESSAGES[type];
+  const message = t(`historyLog.actions.${type}`);
   const textColor = TEXT_COLORS[type];
   const bgColor = BG_COLORS[type];
 

@@ -4,8 +4,10 @@ import { AddForm } from "../add-todo-form/add-todo-form";
 import { TodoListCard } from "../todo-list-card/todo-list-card";
 import { useLogic } from "./logic";
 import { Modal } from "../ui/modal/modal";
+import { useTranslation } from "react-i18next";
 
 export const TodoLists: React.FC = () => {
+  const { t } = useTranslation();
   const {
     todoLists,
     isLoading,
@@ -17,24 +19,25 @@ export const TodoLists: React.FC = () => {
     setSelectedListId,
   } = useLogic();
 
-  if (isLoading) return <p data-testid='todo-lists-loading'>Loading...</p>;
+  if (isLoading)
+    return <p data-testid='todo-lists-loading'>{t("todoLists.loading")}</p>;
 
   if (isError)
-    return <p data-testid='todo-lists-error'>Error loading lists.</p>;
+    return <p data-testid='todo-lists-error'>{t("todoLists.error")}</p>;
 
   if (!todoLists?.length) {
-    return <div data-testid='todo-lists-empty'>No lists to display</div>;
+    return <div data-testid='todo-lists-empty'>{t("todoLists.empty")}</div>;
   }
 
   return (
     <Container>
       <h1 className='text-black mb-5 md:mb-8' data-testid='todo-lists-title'>
-        My Todo Lists
+        {t("todoLists.title")}
       </h1>
 
       <AddForm<CreateTodoListData>
-        placeholder='Add new todo list...'
-        buttonText='Add'
+        placeholder={t("todoLists.addPlaceholder")}
+        buttonText={t("common.add")}
         nameField='name'
         onSubmit={(data) => addTodoList.mutate({ name: data.name })}
       />
@@ -55,8 +58,10 @@ export const TodoLists: React.FC = () => {
 
       {selectedListId !== null && (
         <Modal
-          title='Delete this list?'
-          message='This action cannot be undone. All tasks inside the list will also be deleted.'
+          title={t("todoLists.deleteModal.title")}
+          message={t("todoLists.deleteModal.message")}
+          confirmButtonText={t("todoLists.deleteModal.confirm")}
+          cancelButtonText={t("todoLists.deleteModal.cancel")}
           onConfirm={handleConfirmDelete}
           onCancel={handleCancelDelete}
         />

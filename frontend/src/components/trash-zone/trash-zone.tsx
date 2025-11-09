@@ -1,8 +1,10 @@
 import { useDroppable } from "@dnd-kit/core";
 import { TRASH_ZONE_ID } from "../../constants/constants";
 import { MdDelete } from "react-icons/md";
+import { useTranslation } from "react-i18next";
 
 export const TrashZone: React.FC = () => {
+  const { t } = useTranslation();
   const { setNodeRef, isOver } = useDroppable({ id: TRASH_ZONE_ID });
 
   return (
@@ -21,7 +23,7 @@ export const TrashZone: React.FC = () => {
       <MdDelete data-testid='trash-zone-delete-icon' />
 
       <p className='text-sm' data-testid='trash-zone-text'>
-        Drag items here to delete them
+        {t("trashZone.message")}
       </p>
     </div>
   );

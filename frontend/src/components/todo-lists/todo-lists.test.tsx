@@ -130,7 +130,7 @@ describe("TodoLists", () => {
       render(<TodoLists />, { wrapper: RouterWrapper });
 
       expect(screen.getByText("(2) items")).toBeInTheDocument(); // Shopping List
-      expect(screen.getByText("(1) items")).toBeInTheDocument(); // Work Tasks
+      expect(screen.getByText("(1) item")).toBeInTheDocument(); // Work Tasks
     });
   });
 

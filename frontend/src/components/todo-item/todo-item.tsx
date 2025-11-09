@@ -8,6 +8,7 @@ import {
   MdOutlineCircle,
   MdOutlineDragIndicator,
 } from "react-icons/md";
+import { useTranslation } from "react-i18next";
 
 export interface TodoItemProps extends TodoData {
   updateItem: (todoItemId: number, updatedItem: UpdateTodoData) => void;
@@ -22,6 +23,7 @@ export const TodoItem: React.FC<TodoItemProps> = ({
   deleteItem,
   updateItem,
 }) => {
+  const { t } = useTranslation();
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id });
 
@@ -42,7 +44,7 @@ export const TodoItem: React.FC<TodoItemProps> = ({
           {...listeners}
           {...attributes}
           className='flex items-center h-full cursor-grab active:cursor-grabbing text-gray-400 touch-none'
-          title='Drag to reorder'
+          title={t("todoList.dragToReorder")}
           data-testid='todo-item-drag-handle'
         >
           <MdOutlineDragIndicator className='text-2xl' />

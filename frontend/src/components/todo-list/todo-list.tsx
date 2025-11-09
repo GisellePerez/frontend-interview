@@ -10,8 +10,10 @@ import { useLogic } from "./hooks/useLogic";
 import { HistoryLog } from "../history-log/history-log";
 import { Drawer } from "../drawer/drawer";
 import { MdHistory } from "react-icons/md";
+import { useTranslation } from "react-i18next";
 
 const TodoList: React.FC = () => {
+  const { t } = useTranslation();
   const params = useParams();
   const listIdParam = Number(params.id);
 
@@ -31,9 +33,9 @@ const TodoList: React.FC = () => {
     clearHistory,
   } = useLogic(listIdParam);
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <p>{t("todoList.loading")}</p>;
 
-  if (isError || !todoListData) return <p>Error loading todo list</p>;
+  if (isError || !todoListData) return <p>{t("todoList.error")}</p>;
 
   return (
     <div className='flex flex-col items-center justify-center gap-3 md:gap-5 m-auto w-full'>
@@ -41,18 +43,18 @@ const TodoList: React.FC = () => {
         {/* Back link */}
         <div>
           <Link to='/' className='text-black underline'>
-            <p>&larr; Back</p>
+            <p>&larr; {t("todoList.back")}</p>
           </Link>
         </div>
 
         {/* Open History log button */}
         <button
           onClick={() => setisOpenHistoryLog(true)}
-          title='History log'
+          title={t("todoList.historyLog")}
           className='flex items-center justify-center p-1.5 rounded-full hover:bg-gray-100 hover:cursor-pointer transition-all duration-300'
         >
           <MdHistory className='text-2xl hover:opacity-85' />
-          <p className='pl-1 hidden md:block'>History log</p>
+          <p className='pl-1 hidden md:block'>{t("todoList.historyLog")}</p>
         </button>
       </div>
 
@@ -64,7 +66,11 @@ const TodoList: React.FC = () => {
 
         <div className='py-8 px-9'>
           {/* Add form */}
-          <AddForm<CreateTodoData> onSubmit={handleAddTodo} nameField='name' />
+          <AddForm<CreateTodoData>
+            onSubmit={handleAddTodo}
+            nameField='name'
+            placeholder={t("todoList.addPlaceholder")}
+          />
 
           {/* Items list with draggable sections */}
           {todoListData?.todoItems?.length ? (
@@ -82,7 +88,7 @@ const TodoList: React.FC = () => {
                 }
               >
                 <SortableContext items={todoListData.todoItems}>
-                  <ul className='mt-5 space-y-2 max-h-[40vh] overflow-y-auto'>
+                  <ul className='mt-5 space-y-2 max-h-[30vh] md:max-h-[35vh] overflow-y-auto'>
                     {(todoListData?.todoItems || []).map((item) => (
                       <TodoItem
                         key={item.id}
@@ -109,7 +115,7 @@ const TodoList: React.FC = () => {
             </div>
           ) : (
             <div className='flex items-center justify-center h-48'>
-              <p>No tasks have been entered yet</p>
+              <p>{t("todoList.noTasks")}</p>
             </div>
           )}
         </div>
@@ -119,7 +125,7 @@ const TodoList: React.FC = () => {
       <Drawer
         isOpen={isOpenHistoryLog}
         setIsOpen={setisOpenHistoryLog}
-        title='Action History'
+        title={t("todoList.historyTitle")}
       >
         <HistoryLog actionHistory={actionHistory} clearHistory={clearHistory} />
       </Drawer>

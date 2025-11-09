@@ -1,0 +1,53 @@
+{
+  "todoLists": {
+    "title": "My Todo Lists",
+    "loading": "Loading...",
+    "error": "Error loading lists.",
+    "empty": "No lists to display",
+    "addPlaceholder": "Add new todo list...",
+    "addButton": "Add",
+    "deleteModal": {
+      "title": "Delete this list?",
+      "message": "This action cannot be undone. All tasks inside the list will also be deleted.",
+      "confirm": "Delete",
+      "cancel": "Cancel"
+    },
+    "itemCount": "{{count}} item",
+    "itemCount_other": "{{count}} items"
+  },
+  "todoList": {
+    "back": "Back",
+    "historyLog": "History log",
+    "loading": "Loading...",
+    "error": "Error loading todo list",
+    "addPlaceholder": "Add todo...",
+    "noTasks": "No tasks have been entered yet",
+    "dragToReorder": "Drag to reorder",
+    "historyTitle": "Action History"
+  },
+  "trashZone": {
+    "message": "Drag items here to delete them"
+  },
+  "historyLog": {
+    "title": "Action History",
+    "empty": "No actions recorded yet",
+    "clearHistory": "Clear history",
+    "actions": {
+      "add": "was ADDED",
+      "update": "was UPDATED",
+      "delete": "was DELETED",
+      "reorder": "was REORDERED"
+    }
+  },
+  "form": {
+    "required": "This field is required",
+    "minLength": "Must be at least {{min}} characters"
+  },
+  "common": {
+    "add": "Add",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "save": "Save",
+    "close": "Close"
+  }
+}

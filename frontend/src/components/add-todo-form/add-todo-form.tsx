@@ -1,5 +1,6 @@
 import { useForm, SubmitHandler, FieldValues, Path } from "react-hook-form";
 import { MdAddCircle } from "react-icons/md";
+import { useTranslation } from "react-i18next";
 
 export interface AddFormProps<T extends FieldValues> {
   onSubmit: SubmitHandler<T>;
@@ -13,6 +14,7 @@ export const AddForm = <T extends FieldValues>({
   nameField,
   placeholder = "Add...",
 }: AddFormProps<T>) => {
+  const { t } = useTranslation();
   const {
     register,
     handleSubmit,
@@ -52,10 +54,10 @@ export const AddForm = <T extends FieldValues>({
           aria-describedby={hasError ? `${String(nameField)}-error` : undefined}
           data-testid='add-form-input'
           {...register(fieldName, {
-            required: "This field is required.",
+            required: t("form.required"),
             minLength: {
               value: 2,
-              message: "Must be at least 2 characters.",
+              message: t("form.minLength", { min: 2 }),
             },
           })}
         />
@@ -82,7 +84,7 @@ export const AddForm = <T extends FieldValues>({
           className='text-red-500 text-sm mt-1 ml-3'
           data-testid='add-form-error'
         >
-          {(errors[fieldName]?.message as string) ?? "This field is required."}
+          {(errors[fieldName]?.message as string) ?? t("form.required")}
         </p>
       )}
     </form>

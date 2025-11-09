@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { TodoListData } from "../../types/todos";
 import { MdDelete } from "react-icons/md";
 import { IoMdEye } from "react-icons/io";
+import { useTranslation } from "react-i18next";
 
 export interface TodoListButtonProps extends TodoListData {
   deleteTodoList: (id: TodoListData["id"]) => void;
@@ -15,6 +16,9 @@ export const TodoListCard: React.FC<TodoListButtonProps> = ({
   todoItems,
   deleteTodoList,
 }) => {
+  const { t } = useTranslation();
+  const itemCount = (todoItems || [])?.length;
+
   return (
     <div
       className='flex items-center justify-between py-4 px-5 mb-4 md:mb-5 border-2 border-black rounded-xl max-w-full'
@@ -24,9 +28,9 @@ export const TodoListCard: React.FC<TodoListButtonProps> = ({
         <h2 className='text-xl font-bold' data-testid='todo-list-name'>
           {name}
         </h2>
-        <p data-testid='todo-list-item-count'>{`(${
-          (todoItems || [])?.length
-        }) items`}</p>
+        <p data-testid='todo-list-item-count'>
+          {t("todoLists.itemCount", { count: itemCount })}
+        </p>
       </div>
 
       <div className='flex items-center gap-4'>

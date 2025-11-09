@@ -60,7 +60,7 @@ describe("Modal", () => {
     render(<Modal {...defaultProps} onConfirm={mockOnConfirm} />);
 
     const deleteButton = screen.getByTestId("modal-confirm-button");
-    expect(deleteButton).toHaveTextContent("Confirm");
+    expect(deleteButton).toHaveTextContent("Delete");
     await user.click(deleteButton);
 
     expect(mockOnConfirm).toHaveBeenCalledTimes(1);

@@ -94,7 +94,7 @@ describe("AddForm", () => {
 
       await waitFor(() => {
         const error = screen.getByTestId("add-form-error");
-        expect(error).toHaveTextContent("This field is required.");
+        expect(error).toHaveTextContent("This field is required");
       });
     });
   });

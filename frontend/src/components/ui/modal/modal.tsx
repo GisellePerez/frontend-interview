@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next";
+
 export interface ModalProps {
   title: string;
   message: string;
@@ -10,11 +12,13 @@ export interface ModalProps {
 export const Modal: React.FC<ModalProps> = ({
   title,
   message,
-  cancelButtonText = "Cancel",
-  confirmButtonText = "Confirm",
+  cancelButtonText,
+  confirmButtonText,
   onConfirm,
   onCancel,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <div
       className='fixed inset-0 bg-black/50 flex items-center justify-center z-50'
@@ -37,7 +41,7 @@ export const Modal: React.FC<ModalProps> = ({
             className='px-4 py-2 rounded-lg border border-gray-400 hover:bg-gray-100 transition'
             data-testid='modal-cancel-button'
           >
-            {cancelButtonText}
+            {cancelButtonText || t("common.cancel")}
           </button>
 
           <button
@@ -45,7 +49,7 @@ export const Modal: React.FC<ModalProps> = ({
             className='px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 transition'
             data-testid='modal-confirm-button'
           >
-            {confirmButtonText}
+            {confirmButtonText || t("common.delete")}
           </button>
         </div>
       </div>
