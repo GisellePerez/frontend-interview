@@ -17,17 +17,20 @@ export const TodoLists: React.FC = () => {
     setSelectedListId,
   } = useLogic();
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <p data-testid='todo-lists-loading'>Loading...</p>;
 
-  if (isError) return <p>Error loading lists.</p>;
+  if (isError)
+    return <p data-testid='todo-lists-error'>Error loading lists.</p>;
 
   if (!todoLists?.length) {
-    return <div>No lists to display</div>;
+    return <div data-testid='todo-lists-empty'>No lists to display</div>;
   }
 
   return (
     <Container>
-      <h1 className='text-black mb-5 md:mb-8'>My Todo Lists</h1>
+      <h1 className='text-black mb-5 md:mb-8' data-testid='todo-lists-title'>
+        My Todo Lists
+      </h1>
 
       <AddForm<CreateTodoListData>
         placeholder='Add new todo list...'
@@ -36,7 +39,10 @@ export const TodoLists: React.FC = () => {
         onSubmit={(data) => addTodoList.mutate({ name: data.name })}
       />
 
-      <ul className='my-5 max-w-full w-full h-[70vh] overflow-y-auto'>
+      <ul
+        className='my-5 max-w-full w-full h-[70vh] overflow-y-auto'
+        data-testid='todo-lists-container'
+      >
         {(todoLists || []).map((list) => (
           <li key={list.id}>
             <TodoListCard

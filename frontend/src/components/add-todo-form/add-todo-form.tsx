@@ -34,11 +34,13 @@ export const AddForm = <T extends FieldValues>({
       onSubmit={handleSubmit(handleFormSubmit)}
       className='w-full mb-2 md:mb-3'
       noValidate
+      data-testid='add-form'
     >
       <div
         className={`flex justify-between rounded-full border-2 ${
           hasError ? "border-red-500" : "border-black"
         }`}
+        data-testid='add-form-container'
       >
         <input
           className={`w-full px-4 py-2 mr-4 my-0.5 ml-0.5 rounded-full outline-none focus:ring-2 ${
@@ -48,6 +50,7 @@ export const AddForm = <T extends FieldValues>({
           placeholder={placeholder}
           aria-invalid={hasError ? "true" : "false"}
           aria-describedby={hasError ? `${String(nameField)}-error` : undefined}
+          data-testid='add-form-input'
           {...register(fieldName, {
             required: "This field is required.",
             minLength: {
@@ -63,6 +66,7 @@ export const AddForm = <T extends FieldValues>({
           className={`rounded-full transition-transform duration-150 hover:scale-105 active:scale-95 ${
             isSubmitting ? "opacity-50 cursor-not-allowed" : ""
           }`}
+          data-testid='add-form-submit'
         >
           <MdAddCircle
             className={`text-5xl ${
@@ -76,6 +80,7 @@ export const AddForm = <T extends FieldValues>({
         <p
           id={`${String(nameField)}-error`}
           className='text-red-500 text-sm mt-1 ml-3'
+          data-testid='add-form-error'
         >
           {(errors[fieldName]?.message as string) ?? "This field is required."}
         </p>
